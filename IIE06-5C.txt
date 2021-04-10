@@ -129,6 +129,8 @@ public class CarTypes {
 			// are now converting from string to char
 			this.series[i] = elements[4].charAt(0);
 			gt.addRowToTable(tableIndex, currentCarData);
+			//incrementing the counter & record number entry. This is also used to keep track of how many cars were added and to ensure 
+			// we do not exceed the maximum allowed.
 			i++;
 			recordNum++;
 		} else {
