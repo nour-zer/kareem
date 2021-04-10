@@ -1,0 +1,120 @@
+public class CarTypes {
+	
+	//variable Declaration as object member variables of the CarTypes Class
+	private GTerm gt;
+	
+	//variable Declaration as object member variables of the CarTypes Class
+	private int maxNumRecords;
+	private int recordNum;
+	private int i;
+	//Array Declaration as object member variables of the CarTypes Class
+	private String[] makes;
+	private int[] yearOfManufacture;
+	private boolean[] inStock;
+	private double[] weight;
+	private char[] series;
+	
+	//Constructor
+	public CarTypes(){
+		this.gt = new GTerm(1400, 1000);
+		// Declaring integer type variable maxNumRecords which stores user response as
+		// to the maximum number of records
+		this.maxNumRecords = Integer.parseInt(gt.getInputString("How many records would you like to enter?"));
+		// Declaring string variable answer which will be used to store entire user
+		// response before extracting inputs & storing in elements array.
+		String answer;
+		// Declaring arrays to be used to stored the various data types & creating
+		// instances of them of size maxNumRecords
+		String[] elements;
+		// Declaring arrays to be used to stored the various data types & creating
+				// instances of them of size maxNumRecords
+		this.makes = new String[maxNumRecords];
+	    this.yearOfManufacture = new int[maxNumRecords];
+		this.inStock = new boolean[maxNumRecords];
+		this.weight = new double[maxNumRecords];
+		this.series = new char[maxNumRecords];
+
+		// Declaring & initializing counter that will be used to traverse the while loop
+		// & arrays
+		this.i = 0;
+		// Declaring & initializing integer variable to keep track of record entry
+		this.recordNum = 1;
+
+		while (i < maxNumRecords) {
+			// Declaring string variable named answer which captures the entire user input
+			// with one prompt
+			answer = gt.getInputString("Enter car record #: "+recordNum+ " made up of the following fields & separated by ':'\nMake:Year of Manufacture:In Stock:Weight:Series\n\nMAKE must be either toyota,mazda,bmw,honda\nYEAR must be a whole number between 1970-2021\nIN STOCK must be either 'true' or 'false'\nWEIGHT must be a number that is greater than 300.0\nSERIES must be a single character");
+			// Declaring & creating a String array which will be used to store all the
+			// string elements which have been split into 5 string elements
+			elements = answer.split(":");
+
+			// Assigning the first element of the elements string array to the ith entry of
+			// the makes string array
+			makes[i] = elements[0];
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car make using INDEFINITE SCENARIO 2
+			// WHILE loop
+			while (!("toyota".equals(makes[i]) || "mazda".equals(makes[i]) || "bmw".equals(makes[i])
+					|| "honda".equals(makes[i]))) {
+				makes[i] = gt.getInputString("Please re-enter MAKE that is either:\ntoyota\nmazda\nbmw\nhonda");
+			}
+
+			// Converting the 2nd element of the elements string array to an integer &
+			// assigning it
+			// to ith entry of the yearofManufacture int array
+			yearOfManufacture[i] = Integer.parseInt(elements[1]);
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car year of manufacture
+			while (yearOfManufacture[i] < 1970 || yearOfManufacture[i] > 2021) {
+				yearOfManufacture[i] = Integer
+						.parseInt(gt.getInputString("Please enter YEAR OF MANUFACTURE between 1970-2021"));
+
+			}
+			// Verifying if the user typed in an acceptable value of either 'true' or
+			// 'false'
+			while (!("true".equals(elements[2]) || "false".equals(elements[2]))) {
+				elements[2] = gt.getInputString("Please re-enter 'IN STOCK' by typing value either 'true' or 'false'");
+			}
+			// Converting the 3nd element of the elements string array to a boolean &
+			// assigning it to
+			// an ith entry of the boolean array inStock
+			inStock[i] = Boolean.parseBoolean(elements[2]);
+
+			// Converting the 4th element of the string array to a double/decimal number &
+			// assigning it to ith entry of the double array called weight
+			weight[i] = Double.parseDouble(elements[3]);
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car year of manufacture
+			while (weight[i] < 300) {
+				weight[i] = Double
+						.parseDouble(gt.getInputString("Please re-enter WEIGHT that is a number greater than 300.0 "));
+			}
+			// Verifying if the user typed in a single Character for SERIES
+			while (elements[4].length() > 1) {
+				elements[4] = gt.getInputString("Please enter a single character for SERIES");
+			}
+			// At this stage we have confirmed that user typed in a SINGLE character so we
+			// are now converting from string to char
+			series[i] = elements[4].charAt(0);
+
+			// Printing out a confirmation of what the user typed in in a list format.
+			gt.println("Confirmation:\n\nRECORD NUMBER: " + recordNum + "\nMAKE: " + makes[i]
+					+ "\nYear Of Manufacture: " + yearOfManufacture[i] + "\nIn Stock: " + elements[2] + "\nWeight: "
+					+ weight[i] + "\nSeries: " + series[i] + "\n\n");
+			// incrementing counter used in while loop
+			i++;
+			// incrementing the record number as we have successfully entered the record
+			recordNum++;
+		}
+		// End the program with a message to user terminal advising that all records
+		// have been succesfully entered
+		gt.println("All " + i + " out of " + maxNumRecords
+				+ " car records have been entered into our system successfully\n");
+	}
+	public static void main(String[] args) {
+		
+		CarTypes carTypeInstance = new CarTypes();
+		
+
+	}
+}
