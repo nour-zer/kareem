@@ -1,0 +1,176 @@
+import java.util.Scanner;
+
+public class CarTypes {
+
+	// variable Declaration as object member variables of the CarTypes Class
+	private Scanner scn;
+
+	// variable Declaration as object member variables of the CarTypes Class
+	private int maxNumRecords;
+	private int recordNum;
+	// i is used to keep track of current record
+	private int i;
+
+	// Array Declaration as object member variables of the CarTypes Class.Arrays
+	// below are used to store each field.
+	private String[] makes;
+	private int[] yearOfManufacture;
+	private boolean[] inStock;
+	private double[] weight;
+	private char[] series;
+
+	// Constructor for Car Types
+	public CarTypes() {
+		// Creating a scanner instance to read in user input
+		this.scn = new Scanner(System.in);
+		// Declaring integer type variable maxNumRecords which stores user response as
+		// to the maximum number of records
+		System.out.println("How many records would you like to enter?");
+		this.maxNumRecords = Integer.parseInt(scn.nextLine());
+		System.out.println("Maximum number of cars that can be entered is: " + maxNumRecords);
+		// Declaring arrays to be used to stored the various data types & creating
+		// instances of them of size maxNumRecords
+		this.makes = new String[maxNumRecords];
+		this.yearOfManufacture = new int[maxNumRecords];
+		this.inStock = new boolean[maxNumRecords];
+		this.weight = new double[maxNumRecords];
+		this.series = new char[maxNumRecords];
+		// Declaring & initializing counter that will be used to traverse the while loop
+		// & arrays. This i keeps track of current car record.
+		this.i = 0;
+		// Declaring & initializing integer variable to keep track of record entry
+		this.recordNum = 1;
+		//invoke the addCar method which will add the entries for each car
+		addCar();
+		//Completion of program advising user that all records have been entered
+		System.out.println("All " + maxNumRecords + " car records have been entered succesfully ");
+
+	}
+    //The main method where 
+	
+	public static void main(String[] args) {
+
+		CarTypes carTypeInstance = new CarTypes();
+	}
+
+	// addCar method which adds a single row entry to the table. It also ensures
+	// that the user does not enter more car records than maximum specified.
+	public void addCar() {
+		// checking if user has not inputed more than maximum allocated.
+		while (i < maxNumRecords) {
+			// Declaring string variable answer which will be used to store entire user
+			// response before extracting inputs & storing in elements array.
+			String answer;
+			// Declaring string array to be used to store the 5 fields of user response.
+			String[] elements;
+			// prompt user to input car record separated by ":" and stores answer in string
+			// variable
+			System.out.println("Enter car record #: " + recordNum
+					+ " made up of the following fields & separated by ':'\nMake:Year of Manufacture:In Stock:Weight:Series\n\nMAKE must be either toyota,mazda,bmw,honda\nYEAR must be a whole number between 1970-2021\nIN STOCK must be either 'true' or 'false'\nWEIGHT must be a number that is greater than 300.0\nSERIES must be a single character");
+			answer = scn.nextLine();
+			// Declaring & creating a String array which will be used to store all the
+			// string elements which have been split into 5 string elements
+			elements = answer.split(":");
+
+			// Assigning the first element of the elements string array to the ith entry of
+			// the makes string array
+			this.makes[i] = elements[0];
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car make using INDEFINITE SCENARIO 2
+			// WHILE loop
+			while (!("toyota".equals(makes[i]) || "mazda".equals(makes[i]) || "bmw".equals(makes[i])
+					|| "honda".equals(makes[i]))) {
+				// Asking user to re-enter make & storing the response in the makes array
+				System.out.println("Please re-enter MAKE that is either:\ntoyota\nmazda\nbmw\nhonda");
+				this.makes[i] = scn.nextLine();
+			}
+
+			// Converting the 2nd element of the elements string array to an integer &
+			// assigning it to ith entry of the yearofManufacture int array
+			this.yearOfManufacture[i] = Integer.parseInt(elements[1]);
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car year of manufacture
+			while (yearOfManufacture[i] < 1970 || yearOfManufacture[i] > 2021) {
+				// Asking user to re-enter Year of Manufacture & converting response to an
+				// integer & storing the response in the yearofmanufacture array
+				System.out.println("Please enter YEAR OF MANUFACTURE between 1970-2021");
+				yearOfManufacture[i] = Integer.parseInt(scn.nextLine());
+			}
+
+			// Verifying if the user typed in an acceptable value of either 'true' or
+			// 'false'
+			while (!("true".equals(elements[2]) || "false".equals(elements[2]))) {
+				// Asking user to re-enter In Stock & storing the response in the elements array
+				// in the 3rd position
+				System.out.println("Please re-enter 'IN STOCK' by typing value either 'true' or 'false'");
+				elements[2] = scn.nextLine();
+			}
+
+			// Converting the 3nd element of the elements string array to a boolean &
+			// assigning it to an ith entry of the boolean array inStock
+			this.inStock[i] = Boolean.parseBoolean(elements[2]);
+
+			// Converting the 4th element of the string array to a double/decimal number &
+			// assigning it to ith entry of the double array called weight
+			this.weight[i] = Double.parseDouble(elements[3]);
+			// Verifying if the user typed in an acceptable value. If not then prompt them
+			// to re-enter an acceptable value for car year of manufacture
+			while (weight[i] < 300) {
+				// Asking user to re-enter Weight & converting response to a double & storing
+				// the response in weight array
+				System.out.println("Please re-enter WEIGHT that is a number greater than 300.0 ");
+				weight[i] = Double.parseDouble(scn.nextLine());
+			}
+
+			// Verifying if the user typed in a single Character for SERIES
+			while (elements[4].length() > 1) {
+				// Asking user to re-enter Series & storing the response in the elements array
+				// in the 5th position
+				System.out.println("Please enter a single character for SERIES");
+				elements[4] = scn.nextLine();
+			}
+
+			// At this stage we have confirmed that user typed in a SINGLE character so we
+			// are now converting from string to char
+			this.series[i] = elements[4].charAt(0);
+
+			// incrementing the counter & record number entry. This is also used to keep
+			// track of how many cars were added and to ensure
+			// we do not exceed the maximum allowed.
+			i++;
+			recordNum++;
+			refreshTable();
+
+		}
+
+	}
+
+	// This method is used to populate the table every time it is invoked by
+	// traversing through the arrays of each field and print in on the screen in
+	// table format
+	public void refreshTable() {
+	    //Print the table column heading
+		System.out.println("Make\t|\tYear of Manufacture\t|\tIn Stock\t|\tWeight\t|\tSeries");
+		// Loop used to traverse all 5 field array capturing all the fields & adding
+		// each row
+		for (int counter = 0; counter < i; counter++) {
+			// String variable used to capture row Data
+			String currentCarData = "";
+			// concating string of car "make" with "tab"
+			currentCarData += makes[counter] + "\t\t\t";
+			// adding the 2nd field which is Year of Manufacture to row data string for
+			// current car record i
+			currentCarData += yearOfManufacture[counter] + "\t\t\t";
+			// adding the 3rd field which is In Stock to row data string for current car
+			// record
+			currentCarData += inStock[counter] + "\t\t\t";
+			// adding the 4th field which is Weight
+			currentCarData += weight[counter] + "\t\t";
+			// adding the 5th field which is Series to row data string
+			currentCarData += series[counter];
+			// Prints out the row of data fields into the console table
+			System.out.println(currentCarData);
+		}
+
+	}
+}
